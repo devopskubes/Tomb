@@ -17,12 +17,13 @@ jobs:
     name: PR Test       # Synthesizes the CloudFormation template for the specified stack(s) or all
     runs-on: ubuntu-latest
     environment: 
-      name: testenv
+      name: uat
     steps:
       - name: Checkout
         uses: actions/checkout@v2
       - name: shell
-        run: echo "creating pull request in opened type"
+      - run: echo "creating pull request in opened type"
+      - run: ${{ env.uat }}
   cdk-pr-2:
     if: github.ref == 'refs/heads/master'
     name: PR Open       # Synthesizes the CloudFormation template for the specified stack(s) or all
