@@ -1,0 +1,37 @@
+name: github-actions-aws-cdk
+
+on: 
+  push:
+    branches: [ test ]
+  pull_request:
+    branches: [ master, uat ]
+    types: [ opened ]
+env:
+  REGION: ap-east-1
+  PYTHON_VERSION: '3.9.1'
+  RUBY_VERSION: '2.6'
+      
+jobs:
+  cdk-pr-1:
+    if: github.ref == 'refs/heads/uat'
+    name: PR Test       # Synthesizes the CloudFormation template for the specified stack(s) or all
+    runs-on: ubuntu-latest
+    environment: 
+      name: uat
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: shell
+      - run: echo "creating pull request in opened type"
+      - run: ${{ env.uat }}
+  cdk-pr-2:
+    if: github.ref == 'refs/heads/master'
+    name: PR Open       # Synthesizes the CloudFormation template for the specified stack(s) or all
+    runs-on: ubuntu-latest
+    environment: 
+      name: test
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: shell
+        run: echo "working pull request in opened type"
